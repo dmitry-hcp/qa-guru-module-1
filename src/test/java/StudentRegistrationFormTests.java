@@ -1,12 +1,6 @@
-import com.codeborne.selenide.selector.ByText;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
 
-import java.io.File;
-import java.time.LocalDate;
-
-import static com.codeborne.selenide.Condition.matchText;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
@@ -50,5 +44,26 @@ public class StudentRegistrationFormTests extends TestBase {
         $$("tbody tr").findBy(text("Address")).shouldHave(matchText("Проснись, John Doe.*, все спокойно,.*,что он сын волка"));
         $$("tbody tr").findBy(text("State and City")).shouldHave(text("Haryana Karnal"));
     }
+    @Test
+    void shouldSubmitWithValidRequiredFields() {
+        open("/automation-practice-form");
 
+        $("#firstName").setValue("John");
+        $("#lastName").setValue("Doe");
+//        $("[id=userEmail]").setValue("some-male@example.com"); // test fail check
+        $("#gender-radio-1").click();
+        $("#userNumber").setValue("7479990002");
+        $("#submit").click();
+//        System.out.println($$("tbody tr").texts());
+        $$("tbody tr").findBy(text("Student Name")).shouldHave(text("John Doe"));
+        $$("tbody tr").findBy(text("Student Email")).$("td", 1).shouldBe(empty);
+        $$("tbody tr").findBy(text("Gender")).shouldHave(text("Male"));
+        $$("tbody tr").findBy(text("Mobile")).shouldHave(text("7479990002"));
+        $$("tbody tr").findBy(text("Date of Birth")).shouldHave(text("08 June,2026"));
+        $$("tbody tr").findBy(text("Subjects")).$("td", 1).shouldBe(empty);
+        $$("tbody tr").findBy(text("Hobbies")).$("td", 1).shouldBe(empty);
+        $$("tbody tr").findBy(text("Picture")).$("td", 1).shouldBe(empty);
+        $$("tbody tr").findBy(text("Address")).$("td", 1).shouldBe(empty);
+        $$("tbody tr").findBy(text("State and City")).$("td", 1).shouldBe(empty);
+    }
 }
