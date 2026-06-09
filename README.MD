@@ -1,1 +1,1 @@
-Hello, qa.guru!
+Here are my solutions for QA.GURU module 1 homework
