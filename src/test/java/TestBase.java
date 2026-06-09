@@ -14,12 +14,12 @@ public class TestBase {
     public static void setup() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1280x1024";
-//        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
     }
 
-    @AfterEach
-    void setUp() {
-        closeWebDriver();
-    }
+//    @AfterEach
+//    void setUp() {
+//        closeWebDriver();
+//    }
 
 }

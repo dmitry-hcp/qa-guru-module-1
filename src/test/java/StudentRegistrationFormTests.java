@@ -140,4 +140,35 @@ public class StudentRegistrationFormTests extends TestBase {
         $("#userNumber").shouldHave(attribute("required"));
         $("#userNumber").shouldHave(value("+774799900"));
     }
+
+    @Test
+    void shouldSubmitSimpleFormSWithValidData() {
+        open("/text-box");
+
+        $("#userName").setValue("John Doe");
+//        $("#currentAddress-wrapper #currentAddress").setValue("hjdjvb");
+//        $("#permanentAddress-wrapper #permanentAddress").setValue("hjdjvb");
+        $("#submit").click();
+        $("#name").shouldHave(text("Name:John Doe"));
+        $("#email").shouldNot(exist);
+        $("#output #currentAddress").shouldNot(exist);
+        $("#output #permanentAddress").shouldNot(exist);
+
+    }
+
+    @Test
+    void shouldNotSubmitSimpleFormSWithWrongEmail() {
+        open("/text-box");
+
+        $("#userName").setValue("John Doe");
+        $("#submit").click();
+        $("#userName").setValue("Jane Doe");
+        $("#userEmail").setValue("emailWitoutDomen");
+        $("#submit").click();
+        $("#name").shouldHave(text("Name:John Doe"));
+        $("#email").shouldNot(exist);
+        $("#output #currentAddress").shouldNot(exist);
+        $("#output #permanentAddress").shouldNot(exist);
+
+    }
 }
